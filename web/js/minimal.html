@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+  </head>    
+  <body>
+    <h1>Minimal JavaScript Example</h1>
+    <input type="text" id="name"/>
+    <input type="button" id="submit" value="Sag Hallo"/>
+    <p id="greeting"></p>
+
+    <script type="module">
+        function greet(name) {
+          document.getElementById("greeting").innerHTML = "Hello " + name + "!";
+        }
+
+        document.getElementById("submit").addEventListener("click", function() {
+          greet(document.getElementById("name").value)
+        })
+    </script>
+  </body>
+</html>

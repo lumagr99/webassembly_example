@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>WASM Performance test</title>
+    <h1>Rust (WebAssembly)</h1>
+    <table>
+      <tr>
+        <th>Anzahl<br>Operationen</th>
+        <th>Laufzeit</th>
+      </tr>
+      <tr>
+        <td>100</td>
+        <td id="s_time"></td>
+      </tr>
+      <tr>
+        <td>1000</td>
+        <td id="m_time"></td>
+      </tr>
+      <tr>
+        <td>10000</td>
+        <td id="l_time"></td>
+      </tr>
+    </table>
+    <h1>Rust</h1>
+    <table id="table">
+      <tr>
+        <th>Nummer</th>
+        <th>Fibonacci-Zahl</th>
+      </tr>
+    </table>
+  </head>
+  <body>
+    <script type="module">
+	  import {run} from "../helper/helper.js";
+    import init, { rust } from "./pkg_fib/hello_wasm.js";
+    async function start() {
+        await init();
+        
+        run(rust);
+      }
+      start();
+    </script>
+  </body>
+</html>

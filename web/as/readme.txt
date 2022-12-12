@@ -1,0 +1,1 @@
+Die AssemblyScript Anwendung kann aus dem workspace mit npm-Install gestartet werden.

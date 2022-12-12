@@ -1,0 +1,28 @@
+{
+  "name": "assemblyscript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node tests",
+    "asbuild:debug": "asc assembly/index.ts --target debug",
+    "asbuild:release": "asc assembly/index.ts --target release",
+    "asbuild": "npm run asbuild:debug && npm run asbuild:release",
+    "start": "npx serve ."
+  },
+  "author": "Luca Graef",
+  "license": "ISC",
+  "devDependencies": {
+    "assemblyscript": "^0.24.1"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./release/release.js",
+      "types": "./release/release.d.ts"
+    }
+  },
+  "dependencies": {
+    "cors": "^2.8.5"
+  }
+}

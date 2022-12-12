@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+  </head>    
+  <body>
+    <h1>Minimal JavaScript Example</h1>
+    <p id="greeting"></p>
+    <p id="time">Gesamtzeit _______ ms.</p>
+
+
+    <script type="module">
+        let t0 = performance.now();
+        function greet(name) {
+          document.getElementById("greeting").innerHTML = "Hello " + name + "!";
+        }
+        let t1 = performance.now();
+
+        document.getElementById("time").innerHTML = "Gesamtzeit " + (t1 - t0) + " ms."
+    </script>
+  </body>
+</html>

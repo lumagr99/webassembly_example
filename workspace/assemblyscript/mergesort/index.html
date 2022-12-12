@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>WASM Performance test</title>
+  </head>
+  <body>
+
+    <h1>AssemblyScript (WebAssembly)</h1>
+    <table>
+      <tr>
+        <th>Wörter</th>
+        <th>Laufzeit</th>
+      </tr>
+      <tr>
+        <td>100</td>
+        <td id="xs_time"></td>
+      </tr>
+      <tr>
+        <td>250</td>
+        <td id="s_time">NaN</td>
+      </tr>
+      <tr>
+        <td>500</td>
+        <td id="m_time">NaN</td>
+      </tr>
+      <tr>
+        <td>1000</td>
+        <td id="l_time">NaN</td>
+      </tr>
+	  <tr>
+        <td>5000</td>
+        <td id="xl_time">NaN</td>
+      </tr>
+	  <tr>
+        <td>10000</td>
+        <td id="xxl_time">NaN</td>
+      </tr>
+    </table>
+    
+    <p id="input">Input</p>
+    <p id="output">Output</p>
+
+    <script type="module">
+        import {run} from "./helper/merge_helper.js";
+        import { start } from "./release/release.js";
+        
+        run(start);
+    </script>
+  </body>
+</html>

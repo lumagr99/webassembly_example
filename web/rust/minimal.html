@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+  </head>    
+  <body>
+    <h1>Minimal Rust-WASM Example</h1>
+    <input type="text" id="name"/>
+    <input type="button" id="submit" value="Sag Hallo"/>
+    <p id="greeting">pff</p>
+
+
+    <script type="module">
+      let t0 = performance.now();
+      import init,  {greet} from "./pkg/hello_wasm.js";
+      async function run() {
+        await init();
+        
+        document.getElementById("submit").addEventListener("click", function() {
+          greet(document.getElementById("name").value)
+        });
+      }
+      run()
+    </script>
+  </body>
+</html>

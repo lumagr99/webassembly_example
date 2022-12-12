@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+    <body>
+        <input type="text" id="name" value="test"/>
+        <input type="button" id="submit" value="Sag Hallo"/>
+        <p id="greeting"></p>
+        <script type="module">
+            import { greet } from "./release/release.js";
+            document.getElementById("submit").addEventListener("click", function() {
+                greet(document.getElementById("name").value);
+            });
+        </script>
+    </body>
+</html>

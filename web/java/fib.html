@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>WASM Performance test</title>
+    <h1>Java (WASM)</h1>
+    <table>
+      <tr>
+        <th>Anzahl<br>Operationen</th>
+        <th>Laufzeit</th>
+      </tr>
+      <tr>
+        <td>100</td>
+        <td id="s_time"></td>
+      </tr>
+      <tr>
+        <td>1000</td>
+        <td id="m_time"></td>
+      </tr>
+      <tr>
+        <td>10000</td>
+        <td id="l_time"></td>
+      </tr>
+    <h1>Java (WASM)</h1>
+    <table id="table">
+      <tr>
+        <th>Nummer</th>
+        <th>Fibonacci-Zahl</th>
+      </tr>
+    </table>
+  </head>
+  <body>
+    <script src="./Fibo/bytecoder.js"></script>
+    <script type="module">
+      import {run} from "../helper/java_helper.js";
+
+      var bytecoderWasmFile = './Fibo/bytecoder.wasm';
+      var instantiated = function(result) {
+          bytecoder.init(result.instance);
+          bytecoder.exports.initMemory(0);
+          bytecoder.exports.bootstrap(0);
+          bytecoder.initializeFileIO();
+
+          // We have to activate the garbage collector!
+          var gcInterval = 20; // How often will the GC be triggered (in ms)
+          var gcMaxObjectsPerRun = 30; // How many objects will be collected during one run
+          var gcRunning = false; 
+          var runcounter = 0; // Used for debugging
+          setInterval(function() {
+              if (!gcRunning) {
+                  gcRunning = true;
+                  var freed = bytecoder.exports.IncrementalGC(0, gcMaxObjectsPerRun);
+                  if (runcounter++ % 10 === 0) {
+                      var freemem = bytecoder.exports.freeMem(0);
+                      var epoch = bytecoder.exports.GCEpoch(0);
+                      console.log(freemem + " bytes free memory after GC, epoch = " + epoch);
+                  }
+                  gcRunning = false;
+              }
+          }, gcInterval);
+
+          bytecoder.exports.main(0);
+          run(bytecoder.exports.exportFibo);
+
+          };
+          WebAssembly.instantiateStreaming(fetch(bytecoderWasmFile), bytecoder.imports).then(instantiated).catch(function(error) {
+              var request = new XMLHttpRequest();
+              request.open('GET', bytecoderWasmFile);
+              request.responseType = 'arraybuffer';
+              request.send();
+              request.onload = function() {
+                  var bytes = request.response;
+                  WebAssembly.instantiate(bytes, bytecoder.imports).then(instantiated);
+              };
+          });
+
+    </script>
+  </body>
+</html>
